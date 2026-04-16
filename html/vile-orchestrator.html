@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>V.I.L.E. Wiki - Forecast Approaches</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; border-radius: 8px; margin-bottom: 30px; }
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; }
+        .sidebar { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .sidebar h3 { margin-top: 0; color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .nav-list { list-style: none; padding: 0; }
+        .nav-list li { margin: 8px 0; }
+        .nav-list a { color: #333; text-decoration: none; padding: 8px 12px; display: block; border-radius: 4px; transition: all 0.2s; }
+        .nav-list a:hover { background: #667eea; color: white; }
+        .content { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .content h1 { color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin-top: 0; }
+        .content h2 { margin-top: 30px; color: #444; }
+        .content h3 { margin-top: 25px; color: #555; }
+        .content table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .content table th, .content table td { border: 1px solid #eee; padding: 12px; text-align: left; }
+        .content table th { background: #f8f9fa; }
+        .content table tr:nth-child(even) { background: #f8f9fa; }
+        .content a { color: #667eea; text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
+        .content ul, .content ol { padding-left: 25px; }
+        .content li { margin: 8px 0; }
+        .content code { background: #f1f1f1; padding: 2px 6px; border-radius: 3px; }
+        footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9em; }
+        .edit-link { margin-top: 30px; text-align: right; font-size: 0.9em; }
+        .edit-link a { color: #667eea; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ V.I.L.E. Wiki</h1>
+            <p>Forecast Approaches - Multi-agent weather threat analysis framework</p>
+        </header>
+        
+        <div class="sidebar">
+            <h3>Navigation</h3>
+            <ul class="nav-list">
+                <li><a href="#index">Index</a></li>
+                <li><a href="#entities">Entities</a></li>
+                <li><a href="#maul">M.A.U.L.</a></li>
+                <li><a href="#blast">B.L.A.S.T.</a></li>
+                <li><a href="#havoc">H.A.V.O.C.</a></li>
+                <li><a href="#blight">B.L.I.G.H.T.</a></li>
+                <li><a href="#drown">D.R.O.W.N.</a></li>
+                <li><a href="#smash">S.M.A.S.H.</a></li>
+                <li><a href="#glaze">G.L.A.Z.E.</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            ---
+title: V.I.L.E. Orchestrator
+created: 2026-04-09
+updated: 2026-04-09
+type: entity
+tags: [orchestrator, framework]
+sources: []
+---
+
+# V.I.L.E. Orchestrator
+
+V.I.L.E. (Villaran's Inference & Logic Engine) Master Orchestrator - the central coordinator for the multi-agent weather threat analysis framework.
+
+<h2 id="Overview">Overview</h2>
+
+V.I.L.E. orchestrates 7 specialized sub-agents, each focused on a specific weather threat type. The orchestrator handles:
+
+<ul>
+<li><strong>Data triage and routing</strong> to appropriate sub-agents</li>
+<li><strong>Sub-agent coordination and monitoring</strong></li>
+<li><strong>Confidence scoring and uncertainty quantification</strong></li>
+<li><strong>Output synthesis and report generation</strong></li>
+<li><strong>Conflict resolution between agents</strong></li>
+</ul>
+
+<h2 id="Architecture">Architecture</h2>
+
+<h3 id="Request Structure">Request Structure</h3>
+VILEAnalysisRequest with:
+<ul>
+<li>`location`: Location identifier (station ID, coordinates)</li>
+<li>`timestamp`: Analysis time (ISO format)</li>
+<li>`threat_types`: List of threats to analyze (None = all)</li>
+<li>`data_sources`: Available data sources for analysis</li>
+<li>`confidence_threshold`: Minimum confidence (default: 0.3)</li>
+<li>`time_window_hr`: Analysis time window (default: 6 hours)</li>
+</ul>
+
+<h3 id="Output Structure">Output Structure</h3>
+VILEAnalysisResult containing:
+<ul>
+<li>`request`: Original analysis request</li>
+<li>`threat_assessments`: List of individual agent assessments</li>
+<li>`synthesized_report`: Consolidated report</li>
+<li>`overall_confidence`: Aggregate confidence score (0.0-1.0)</li>
+<li>`processing_time_ms`: Execution time</li>
+<li>`status`: success/partial/failed</li>
+</ul>
+
+<h2 id="Sub-Agents">Sub-Agents</h2>
+
+| Agent | Domain | Parameters |
+|-------|--------|------------|
+| <a href="#maul">maul</a> | Tornadogenesis | LCL height, SRH, bulk shear, STP |
+| <a href="#blast">blast</a> | Convective Wind | DCAPE, dry air, delta-theta-e, lapse rates |
+| <a href="#havoc">havoc</a> | Non-Convective Wind | Pressure gradients, isallobaric forcing, LLJs |
+| <a href="#blight">blight</a> | Heavy Snow | DGZ, frontogenesis, EPV, warm nose |
+| <a href="#drown">drown</a> | Flash Flood | Rainfall rates, antecedent moisture, thresholds |
+| <a href="#smash">smash</a> | Severe Hail | CAPE, updraft, graupel, radar signatures |
+| <a href="#glaze">glaze</a> | Freezing Precip | Temp profiles, freezing level, accretion |
+
+<h2 id="Confidence Calculation">Confidence Calculation</h2>
+
+The overall confidence is a weighted blend:
+<ul>
+<li><strong>70%</strong> weight on maximum individual confidence</li>
+<li><strong>30%</strong> weight on average confidence</li>
+<li><strong>10% bonus</strong> for multiple high-confidence threats (>0.7 each)</li>
+</ul>
+
+<h2 id="Threat Mapping">Threat Mapping</h2>
+
+Threat type strings are mapped to agent keys:
+<ul>
+<li>tornado → MAUL</li>
+<li>convective_wind → BLAST</li>
+<li>non_convective_wind → HAVOC</li>
+<li>heavy_snow → BLIGHT</li>
+<li>flash_flood → DROWN</li>
+<li>hail → SMASH</li>
+<li>freezing_precip → GLAZE</li>
+</ul>
+
+<h2 id="Reference">Reference</h2>
+<ul>
+<li>Source: `/home/progged-ish/projects/forecast_approach/vile_orchestrator.py`</li>
+</ul>
+
+<a href="#VILE Sub-Agents|vile-sub-agents">VILE Sub-Agents|vile-sub-agents</a> <a href="#Forecast Approaches|forecast-approaches">Forecast Approaches|forecast-approaches</a>
+
+        </div>
+        
+        <div class="edit-link">
+            <a href="file:///home/progged-ish/wiki//home/progged-ish/wiki/entities/vile-orchestrator.md" target="_blank">Edit this page</a>
+        </div>
+        
+        <footer>
+            <p>V.I.L.E. Wiki v1.0 | Last update: 2026-04-09</p>
+            <p><small>Source: /home/progged-ish/wiki/</small></p>
+        </footer>
+    </div>
+</body>
+</html>

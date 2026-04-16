@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>V.I.L.E. Wiki - Forecast Approaches</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; border-radius: 8px; margin-bottom: 30px; }
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; }
+        .sidebar { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .sidebar h3 { margin-top: 0; color: #667eea; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .nav-list { list-style: none; padding: 0; }
+        .nav-list li { margin: 8px 0; }
+        .nav-list a { color: #333; text-decoration: none; padding: 8px 12px; display: block; border-radius: 4px; transition: all 0.2s; }
+        .nav-list a:hover { background: #667eea; color: white; }
+        .content { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .content h1 { color: #333; border-bottom: 2px solid #667eea; padding-bottom: 10px; margin-top: 0; }
+        .content h2 { margin-top: 30px; color: #444; }
+        .content h3 { margin-top: 25px; color: #555; }
+        .content table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .content table th, .content table td { border: 1px solid #eee; padding: 12px; text-align: left; }
+        .content table th { background: #f8f9fa; }
+        .content table tr:nth-child(even) { background: #f8f9fa; }
+        .content a { color: #667eea; text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
+        .content ul, .content ol { padding-left: 25px; }
+        .content li { margin: 8px 0; }
+        .content code { background: #f1f1f1; padding: 2px 6px; border-radius: 3px; }
+        footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9em; }
+        .edit-link { margin-top: 30px; text-align: right; font-size: 0.9em; }
+        .edit-link a { color: #667eea; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ V.I.L.E. Wiki</h1>
+            <p>Forecast Approaches - Multi-agent weather threat analysis framework</p>
+        </header>
+        
+        <div class="sidebar">
+            <h3>Navigation</h3>
+            <ul class="nav-list">
+                <li><a href="#index">Index</a></li>
+                <li><a href="#entities">Entities</a></li>
+                <li><a href="#maul">M.A.U.L.</a></li>
+                <li><a href="#blast">B.L.A.S.T.</a></li>
+                <li><a href="#havoc">H.A.V.O.C.</a></li>
+                <li><a href="#blight">B.L.I.G.H.T.</a></li>
+                <li><a href="#drown">D.R.O.W.N.</a></li>
+                <li><a href="#smash">S.M.A.S.H.</a></li>
+                <li><a href="#glaze">G.L.A.Z.E.</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            # Wiki Schema
+
+<h2 id="Domain">Domain</h2>
+Forecast approaches in meteorology — numerical weather prediction (NWP), statistical forecasting, ensemble methods, post-processing techniques, and forecast verification.
+
+<h2 id="Conventions">Conventions</h2>
+<ul>
+<li>File names: lowercase, hyphens, no spaces (e.g., `ensemble-perturbation.md`)</li>
+<li>Every wiki page starts with YAML frontmatter (see below)</li>
+<li>Use `<a href="#wikilinks">wikilinks</a>` to link between pages (minimum 2 outbound links per page)</li>
+<li>When updating a page, always bump the `updated` date</li>
+<li>Every new page must be added to `index.md` under the correct section</li>
+<li>Every action must be appended to `log.md`</li>
+<li>Use standard meteorological abbreviations: NWP, GFS, ECMWF, WRF,ENS, etc.</li>
+</ul>
+
+<h2 id="Frontmatter">Frontmatter</h2>
+```yaml
+---
+title: Page Title
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+type: entity | concept | comparison | query | summary
+tags: [from taxonomy below]
+sources: [raw/articles/source-name.md]
+---
+```
+
+<h2 id="Tag Taxonomy">Tag Taxonomy</h2>
+<h3 id="Forecast Types">Forecast Types</h3>
+<ul>
+<li>nwp, ensemble, statistical, machine-learning, climate-forecast</li>
+</ul>
+
+<h3 id="Forecast Components">Forecast Components</h3>
+<ul>
+<li>initial-condition, boundary-condition, parameterization, physics, model-resolution</li>
+</ul>
+
+<h3 id="Data Sources">Data Sources</h3>
+<ul>
+<li>gfs, ecmwf, wrf, mesoscale, obs-data, reanalysis</li>
+</ul>
+
+<h3 id="Techniques">Techniques</h3>
+<ul>
+<li>ensemble-perturbation, model-averaging, post-processing, downscaling, bias-correction</li>
+</ul>
+
+<h3 id="Verification">Verification</h3>
+<ul>
+<li>validation, verification, statistical-score, error-analysis, verification-system</li>
+</ul>
+
+<h3 id="Meta">Meta</h3>
+<ul>
+<li>comparison, history, review, controversy, guideline</li>
+</ul>
+
+<h2 id="Page Thresholds">Page Thresholds</h2>
+<ul>
+<li><strong>Create a page</strong> when a concept appears in 2+ sources OR is central to one source</li>
+<li><strong>Add to existing page</strong> when a source mentions something already covered</li>
+<li><strong>DON'T create a page</strong> for passing mentions or minor details outside the domain</li>
+<li><strong>Split a page</strong> when it exceeds ~200 lines — break into sub-topics with cross-links</li>
+<li><strong>Archive a page</strong> when content is fully superseded — move to `_archive/`, remove from index</li>
+</ul>
+
+<h2 id="Entity Pages">Entity Pages</h2>
+One page per notable model/approach:
+<ul>
+<li>Overview / what it is</li>
+<li>Key developers/institutions</li>
+<li>Key parameters and configuration</li>
+<li>Strengths and limitations</li>
+<li>Relationships to other approaches (<a href="#wikilinks">wikilinks</a>)</li>
+<li>Source references</li>
+</ul>
+
+<h2 id="Concept Pages">Concept Pages</h2>
+One page per concept or technique:
+<ul>
+<li>Definition / explanation</li>
+<li>Mathematical basis (if applicable)</li>
+<li>Current state of knowledge</li>
+<li>Open questions or debates</li>
+<li>Related concepts (<a href="#wikilinks">wikilinks</a>)</li>
+</ul>
+
+<h2 id="Update Policy">Update Policy</h2>
+When new information conflicts with existing content:
+1. Check the dates — newer sources generally supersede older ones
+2. If genuinely contradictory, note both positions with dates and sources
+3. Mark the contradiction in frontmatter: `contradictions: [page-name]`
+4. Flag for user review in the lint report
+
+        </div>
+        
+        <div class="edit-link">
+            <a href="file:///home/progged-ish/wiki//home/progged-ish/wiki/SCHEMA.md" target="_blank">Edit this page</a>
+        </div>
+        
+        <footer>
+            <p>V.I.L.E. Wiki v1.0 | Last update: 2026-04-09</p>
+            <p><small>Source: /home/progged-ish/wiki/</small></p>
+        </footer>
+    </div>
+</body>
+</html>
