@@ -198,5 +198,162 @@ ss -tlnp | grep 5000
 
 ## Action Items
 
-- [ ] Initialize git in `/home/progged-ish/nws_dashboard/` to prevent future no-version-control situations
+- [x] Initialize git in `/home/progged-ish/nws_dashboard/` to prevent future no-version-control situations
 - [ ] Add a `Makefile` or `start.sh` that always checks for duplicate `app.run()` calls before starting
+
+---
+
+# Credential Management in Git Repos — Security Incident 2026-04-15
+
+A follow-on incident from the same session as the Flask merge: after initializing git
+repositories and pushing to GitHub, a real Gmail App Password was found committed and
+pushed in plaintext to the public `shanes-scraper` repository.
+
+## What Happened
+
+1. `shanes-scraper/config/smtp_config.json` contained a Gmail App Password in plaintext:
+   ```json
+   {
+     "sender_email": "progged@gmail.com",
+     "sender_password": "vpew jbel fyzj lyef",  // <-- REAL APP PASSWORD
+     "smtp_server": "smtp.gmail.com",
+     ...
+   }
+   ```
+2. This file was committed and pushed to GitHub in the `Initial commit` of `shanes-scraper`.
+3. The PAT (Personal Access Token) used to push was **not** committed — only used via
+   the git credential helper. That was clean.
+4. The password was found by checking `git ls-files | grep -i smtp` across all repos.
+
+## Consequences
+
+- The Gmail App Password for `progged@gmail.com` was publicly visible on GitHub.
+- Anyone who saw it could have used it to send emails from that Gmail account.
+- The password had to be **immediately revoked** at myaccount.google.com/apppasswords.
+- Git history on GitHub still shows the old commit with the real password — even after
+  rewriting history locally with `git commit --amend`, the **remote still has the
+  compromised commit** and needs a force-push to overwrite it.
+
+## Why This Happens
+
+The same root cause as the Flask bug: **speed over safety**. When pushing to a new git
+repo for the first time, it's easy to forget to audit what's being committed. The
+`config/smtp_config.json` looked like a normal config file, not obviously sensitive —
+until you read its contents.
+
+## Prevention Checklist — Before First Push to Any New Repo
+
+```bash
+# 1. Always create .gitignore BEFORE git add .
+cat > .gitignore << 'EOF'
+# Credentials and secrets — NEVER commit
+config/smtp_config.json
+config/*.json
+.env
+*.env
+.env.*
+secrets.*
+*_secret*
+*_password*
+*_key*
+*.key
+
+# Large data files
+data/
+*.grib *.grib2
+*.pkl
+*.csv
+
+# Virtual environments
+venv/
+metar_env/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.py[cod]
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
+
+# 2. After staging but BEFORE committing, review what's being committed
+git status --short
+git ls-files | grep -iE "smtp|password|secret|key|token|auth|cred|\.env"
+
+# 3. Check for API keys / passwords in file contents BEFORE committing
+git diff --cached | grep -i "password\|secret\|key\|token" || echo "No secrets in staged changes"
+
+# 4. For config files that contain credentials: use placeholder templates
+# BAD:  config.json with real password
+# GOOD: config.json.template with placeholder, .gitignore excludes config.json
+cp config/smtp_config.json config/smtp_config.json.template
+echo "config/smtp_config.json" >> .gitignore
+echo '{"sender_email":"YOUR_EMAIL","sender_password":"YOUR_APP_PASSWORD"}' > config/smtp_config.json
+git add config/smtp_config.json.template
+```
+
+## The Right Way to Handle Credentials in Config Files
+
+**Never store real credentials in files tracked by git.** Use one of:
+
+1. **Environment variables** (preferred for scripts):
+   ```python
+   import os
+   password = os.environ.get("GMAIL_APP_PASSWORD")
+   ```
+
+2. **Separate `config.json.example`** committed to git, with real values in
+   `config.json` (added to `.gitignore`):
+   ```
+   config/
+   ├── smtp_config.json       # gitignored, local only, real values
+   └── smtp_config.json.example  # in git, placeholder values only
+   ```
+
+3. **Python-dotenv** for local development:
+   ```
+   # .env (gitignored)
+   GMAIL_APP_PASSWORD=your_real_password
+   ```
+   ```python
+   from dotenv import load_dotenv
+   load_dotenv()
+   ```
+
+## If You Already Pushed Credentials
+
+1. **Immediately revoke the credential** at the provider (Google, AWS, etc.)
+2. Generate a new one
+3. For private repos: remove the file from git history using `git filter-branch`
+   or BFG Repo-Cleaner, then force-push
+4. For public repos (like this case): **revoke FIRST, then rewrite history**.
+   Note: even after rewriting history and force-pushing, GitHub's "Recently
+   pushed commits" UI and any clones that happened before the fix still have
+   the old history. Treat the credential as fully compromised.
+
+## GitHub PAT Scope — Least Privilege
+
+When creating a GitHub Personal Access Token, only grant the scopes you need:
+
+| Scope | Purpose | Risk if token leaks |
+|---|---|---|
+| `repo` | Full repo access | High — can push/pull any private repo |
+| `delete_repo` | Delete repos | Critical — can destroy repos |
+| `workflow` | GitHub Actions | Medium — can modify workflows |
+| `read:user` | Read user profile | Low |
+
+For this setup, `repo` was used. `delete_repo` was NOT granted — which prevented
+deleting the compromised `shanes-scraper` repo via API (HTTP 403).
+
+## Related Pages
+
+- [[nam-data-pipeline]] — the pipeline this dashboard serves
+- [[vile-orchestrator]] — the VILE framework whose threats are displayed
